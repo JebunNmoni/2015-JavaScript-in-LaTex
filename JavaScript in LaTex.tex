@@ -1,0 +1,78 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{hyperref}
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm,ignoreheadfoot]{geometry}
+\usepackage{array}
+\usepackage[svgnames,table]{xcolor}
+\usepackage[pdftex]{insdljs}
+
+\newcommand*{\arraycolor}[1]{\protect\leavevmode\color{#1}}
+\newcolumntype{A}{>{\columncolor{blue!50!white}}c}
+\newcolumntype{B}{>{\columncolor{LightGoldenrod}}c}
+\newcolumntype{C}{>{\columncolor{Green!50}}c}
+\OpenAction{\JS{%
+var d1=this.getField("dhar1");
+var d2=this.getField("dhar2");
+var d3=this.getField("dhar3");
+this.getField("AmiPai").value = d1.value + d2.value + d3.value;
+var f1=this.getField("ferot1");
+var f2=this.getField("ferot2");
+var f3=this.getField("ferot3");
+this.getField("FerotDisos").value = f1.value + f2.value + f3.value;
+}}   
+\begin{document}    
+\section*{Table}
+The following table takes the input and shows the output in a pdf file.
+\renewcommand{\MakeTextField}[2]{{\vbox to #2{\vfill\hbox to #1{\hrulefill}}}}
+\begin{Form}
+\begin{center}
+\sffamily
+\arrayrulecolor{white}
+\arrayrulewidth=1pt
+\renewcommand{\arraystretch}{1.5}
+%\rowcolors[\hline]{3}{.!50!White}{}
+\vspace{0.5in}
+\begin{tabular}{A|B|B|B|B}
+  \multicolumn{4}{C}{\bfseries Calculate Savings}\\
+  \rowcolor{.!50!Black}
+  \arraycolor{White}\bfseries Month &
+  \arraycolor{White}\bfseries Earnings &
+  \arraycolor{White}\bfseries Expenditures&
+  \arraycolor{White}\bfseries Saved\\
+  January &   \TextField[name=JanEr, value=500]{} & 
+  				  \TextField[name=JanEx,, value=350]{}& 
+  				  \TextField[name=JanS,, value=]{}\\
+  February &   \TextField[name=FebEr, value=550]{} & 
+  				  \TextField[name=FebEx,, value=700]{}& 
+  				  \TextField[name=FebS,, value=]{}\\
+  March &   \TextField[name=MarEr, value=700]{} & 
+  				  \TextField[name=MarEx,, value=690]{}& 
+  				  \TextField[name=MarS,, value=]{}\\
+  \rowcolor{.!0!Black}
+  \arraycolor{White}\bfseries Total &
+  \arraycolor{White}\bfseries \TextField[name=TotalEr]{} &
+  \arraycolor{White}\bfseries \TextField[name=TotalEx]{}&
+  \arraycolor{White}\bfseries \TextField[name=TotalS]{}\\
+\end{tabular}
+\end{center}
+
+\vspace{0.2in}
+
+\begin{center}
+\PushButton[onclick={ 
+					var ErJ=this.getField("JanEr");
+					var ExJ=this.getField("JanEx");
+					var ErF=this.getField("FebEr");
+					var ExF=this.getField("FebEx");
+					var ErM=this.getField("MarEr");
+					var ExM=this.getField("MarEx");
+					this.getField("TotalEr").value = ErJ.value + ErF.value + ErM.value;
+					this.getField("TotalEx").value = ExJ.value + ExF.value + ExM.value;
+					this.getField("JanS").value = ErJ.value - ExJ.value;
+					this.getField("FebS").value = ErF.value - ExF.value;
+					this.getField("MarS").value = ErM.value - ExM.value;
+					this.getField("TotalS").value = (ErJ.value - ExJ.value) + (ErF.value - ExF.value) + (ErM.value - ExM.value);
+					}]{Click Me to Calculate the Total}					
+\end{center}
+
+\end{Form}
+\end{document}
